@@ -16,7 +16,7 @@ const Signin: NextPage = () => {
 
                 <form>
                     <Input label={"Usuario"} name={"email"} type={"email"} />
-                    <Input label={"Contraseña"} name={"password"} type={"password"} />
+                    <Input label={"Contraseña"} name={"password"} type={"password"} id={"password"} />
 
                     <p className="text-sm mt-4">¿Aún no tienes una cuenta? <Link href="/signup"><a className="text-blue-500 text-lg hover:scale-150">Registrate</a></Link></p>
 
