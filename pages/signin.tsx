@@ -15,8 +15,8 @@ const Signin: NextPage = () => {
                 <h1 className="text-4xl text-center mb-10 font-bold"> Bienvenido </h1>
 
                 <form>
-                    <Input label={"Usuario"} name={"email"} type={"email"} />
-                    <Input label={"Contraseña"} name={"password"} type={"password"} id={"password"} />
+                    <Input label={"Usuario"} name={"email"} type={"email"} required={true} />
+                    <Input label={"Contraseña"} name={"password"} type={"password"} id={"password"} required={true} />
 
                     <p className="text-sm mt-4">¿Aún no tienes una cuenta? <Link href="/signup"><a className="text-blue-500 text-lg hover:scale-150">Registrate</a></Link></p>
 
