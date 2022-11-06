@@ -1,10 +1,11 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { MouseEventHandler } from "react";
 import Input from "../components/forms/input";
 
 const Signup = () => {
 
-    const checkPassword = (e: Event) => {
+    const checkPassword = (e: any) => {
         e.preventDefault();
 
         const password = document.getElementById("password") as HTMLInputElement;
@@ -12,15 +13,9 @@ const Signup = () => {
 
         if (password.value != confirm_password.value) {
             const passwordErrorMessage = document.getElementById("passwordErrorMessage") as HTMLParagraphElement;
-
-            console.log(passwordErrorMessage.classList);
-            
             passwordErrorMessage.classList.add("visible ");
-            console.log("invalido");
-            
-            confirm_password.setCustomValidity("Las contraseñas no coinciden");
         } else {
-            confirm_password.setCustomValidity('');
+            // ToDO: Send data to the server
         }
     }
 

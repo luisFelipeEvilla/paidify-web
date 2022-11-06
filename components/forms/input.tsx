@@ -7,8 +7,10 @@ const Input = (props: InputProps) => {
     const showPassword = () => {
         console.log(props.type);
 
-        const password = document.getElementById("password") as HTMLInputElement;
-
+        const id = props.id as string;
+        
+        const password = document.getElementById(id) as HTMLInputElement;
+        
         if (password === null) return null;
 
         password.type === "password" ? password.type = "text" : password.type = "password";
