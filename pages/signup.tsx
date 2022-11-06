@@ -5,6 +5,7 @@ import Input from "../components/forms/input";
 
 const Signup = () => {
 
+    const campus = ["Barranquilla", "Cartagena", "Santa Marta", "Sincelejo", "Monteria"];
     const checkPassword = (e: any) => {
         e.preventDefault();
 
@@ -23,10 +24,10 @@ const Signup = () => {
         <form className="">
             <div className="flex flex-col items-center justify-center h-screen">
                 <div className="grid grid-cols-2 gap-x-32 justify-items-center w-6/12">
-                    <Input label={"Nombres"} name={"name"} type={"text"} required={true} />
+                    <Input  label={"Nombres"} name={"name"} type={"text"} required={true} />
                     <Input label={"Apellidos"} name={"lastName"} type={"text"} required={true} />
                     <Input label={"Email"} name={"email"} type={"text"} required={true} />
-                    <Input label={"Sede"} name={"campus"} type={"text"} required={true} />
+                    <Input label={"Sede"} name={"campus"} type={"text"} required={true} Options={campus} />
                     <div className="">
                         <Input label={"Contraseña"} name={"password"} type={"password"} id={"password"} required={true} minLength={6} />
                         <p className="hidden text-red-500 text-m" id="passwordErrorMessage">Error las contraseñas no coinciden</p>
