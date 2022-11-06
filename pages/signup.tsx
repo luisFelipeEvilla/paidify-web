@@ -27,7 +27,7 @@ const Signup = () => {
                     <Input  label={"Nombres"} name={"name"} type={"text"} required={true} />
                     <Input label={"Apellidos"} name={"lastName"} type={"text"} required={true} />
                     <Input label={"Email"} name={"email"} type={"text"} required={true} />
-                    <Input label={"Sede"} name={"campus"} type={"text"} required={true} Options={campus} />
+                    <Input label={"Sede"} name={"campus"} type={"text"} required={true} />
                     <div className="">
                         <Input label={"Contraseña"} name={"password"} type={"password"} id={"password"} required={true} minLength={6} />
                         <p className="hidden text-red-500 text-m" id="passwordErrorMessage">Error las contraseñas no coinciden</p>
