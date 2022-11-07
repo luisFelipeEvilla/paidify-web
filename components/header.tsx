@@ -1,7 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useCookies } from "react-cookie";
 
 const Header = () => {
+    const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+
+    const handleLogout = () => {
+        removeCookie("token");
+        console.log(cookie.token);
+        
+    }
+
     return (
         <nav className="flex justify-between mx-32 mt-4">
                 <a href="">
@@ -24,7 +33,7 @@ const Header = () => {
                     </a></Link>
                 </li>
                 <li className="mt-2 text-white">
-                    <button className="rounded-2xl text-center py-2.5 px-4">Cerrar sesión</button>
+                    <button onClick={handleLogout} className="rounded-2xl text-center py-2.5 px-4">Cerrar sesión</button>
                 </li>
             </ul>
         </nav>

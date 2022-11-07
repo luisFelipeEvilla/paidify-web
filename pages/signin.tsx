@@ -49,7 +49,7 @@ const Signin: NextPage = () => {
                 <h1 className="text-4xl text-center mb-10 font-bold"> Bienvenido </h1>
 
                 <form onSubmit={handleSubmit}>
-                    <Input onChange={handleOnCahnge} label={"Usuario"} name={"username"} type={"email"} required={true} />
+                    <Input onChange={handleOnCahnge} label={"Usuario"} name={"username"} type={"text"} required={true} />
                     <p id="errorMessage" className={`${err ? "visible" : "hidden"} text-red-500 text-m`}>Eror, credenciales incorrectas</p>
                     <Input onChange={handleOnCahnge} label={"Contraseña"} name={"password"} type={"password"} id={"password"} required={true} />
                     <p className="text-sm mt-4">¿Aún no tienes una cuenta? <Link href="/signup"><a className="text-blue-500 text-lg hover:scale-150">Registrate</a></Link></p>
