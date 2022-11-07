@@ -5,6 +5,7 @@ import Link from "next/link";
 import Router from "next/router";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import PrimaryButton from "../components/buttons/primary";
 import Input from "../components/forms/input";
 
 const Signin: NextPage = () => {
@@ -55,8 +56,7 @@ const Signin: NextPage = () => {
                     <p className="text-sm mt-4">¿Aún no tienes una cuenta? <Link href="/signup"><a className="text-blue-500 text-lg hover:scale-150">Registrate</a></Link></p>
 
                     <div className="flex justify-center	">
-                        <button disabled={err}
-                            className={`hover:scale-105 ${err ? "bg-gray-500" : "bg-green-500 hover:bg-green-700"} text-white font-bold my-4 py-2 px-4 rounded-lg w-32 `} type="submit">Ingresar</button>
+                        <PrimaryButton err={err} text={"Ingresar"} />
                     </div>
                 </form>
             </div>

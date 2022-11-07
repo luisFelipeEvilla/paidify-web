@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Router from "next/router";
 import { useCookies } from "react-cookie";
 
 const Header = () => {
@@ -7,8 +8,7 @@ const Header = () => {
 
     const handleLogout = () => {
         removeCookie("token");
-        console.log(cookie.token);
-        
+        Router.push("/signin");
     }
 
     return (
