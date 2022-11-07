@@ -28,7 +28,7 @@ const Header = () => {
                     </a></Link>
                 </li>
                 <li className="mr-8 mt-4">
-                    <Link href="/clientes"><a>
+                    <Link href="/payment-methods"><a>
                         Métodos de pago
                     </a></Link>
                 </li>
