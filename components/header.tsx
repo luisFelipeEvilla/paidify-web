@@ -18,7 +18,7 @@ const Header = () => {
                 </a>
             <ul className="flex justify-around font-bold text-xl">
                 <li className="mr-8 mt-4">
-                    <Link href="/facturas"><a>
+                    <Link href="/"><a>
                         Facturas
                     </a></Link>
                 </li>

@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Header from '../components/header'
+import Header from '../components/header';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
   return (
@@ -13,6 +15,9 @@ const Home: NextPage = () => {
       
       <main>
           <Header></Header>
+          <div className={styles.hero + " mt-8 "}>
+            <Image src="/images/hero.png" width={620} height={310}  />
+          </div>
       </main>
 
       <footer>
