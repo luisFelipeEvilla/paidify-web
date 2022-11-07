@@ -1,31 +1,28 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import Header from '../components/header';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Invoice from '../components/invoice';
+import SearchBar from '../components/searchBar';
+import { useState } from 'react';
+import Cookies from 'cookies';
+import jwt from 'jsonwebtoken';
+import { API_URL } from '../config';
 
-const Home: NextPage = () => {
-  const invoices = [
-    {
-      concept: "Pago de servicios",
-      paymentDate: "12/12/2021",
-      invoiceNumber: 123456,
-      amount: 3044932
-    },
-    {
-      concept: "Pago de Matricula",
-      paymentDate: "9/12/2022",
-      invoiceNumber: 123456,
-      amount: 3000000
-    },
-    {
-      concept: "Pago de Matricula",
-      paymentDate: "9/12/2022",
-      invoiceNumber: 123456,
-      amount: 3000000
-    }
-  ]
+type invoice = { concept: string; paymentDate: string; invoiceNumber: number; amount: number; };
+type invoices = { data: invoice[] };
+
+const Home = ({ data } : invoices) => {
+  const [invoices, setInvoices] = useState(data);
+  
+  function handleChange (search: any) {
+    
+    setInvoices(
+      data.filter((invoice: any) => {
+        return invoice.concept.toLowerCase().includes(search.toLowerCase());
+      })
+    );
+  };
 
   return (
     <div>
@@ -41,13 +38,20 @@ const Home: NextPage = () => {
           <Image src="/images/hero.png" width={620} height={310} />
         </div>
 
+        <div className="flex">
+          <div className="m-auto">
+            <SearchBar
+              handleChange={handleChange}
+            ></SearchBar>
+          </div>
+        </div>
         {
-          invoices.map(invoice => (
-            <Invoice 
-            concept={invoice.concept}
-            paymentDate={invoice.paymentDate}
-            invoiceNumber={invoice.invoiceNumber}
-            amount={invoice.amount} />
+          invoices.map((invoice) => (
+            <Invoice
+              concept={invoice.concept}
+              paymentDate={invoice.paymentDate}
+              invoiceNumber={invoice.invoiceNumber}
+              amount={invoice.amount} />
           ))
         }
       </main>
@@ -56,6 +60,30 @@ const Home: NextPage = () => {
       </footer>
     </div>
   )
+};
+
+export async function getServerSideProps({req, res} : any) {
+  const cookies = new Cookies(req, res);
+
+  const token = cookies.get('token') as string;
+  
+  const user = jwt.decode(token) as { id: number };
+  
+  const url = `${API_URL}/users/${user?.id}/invoices`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  
+  const data = await response.json(); 
+  
+  return {
+    props: {data}
+  }
 }
 
 export default Home

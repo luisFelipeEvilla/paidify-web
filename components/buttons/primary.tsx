@@ -1,6 +1,4 @@
 const PrimaryButton = ({err = false, color = "green", text = "Aceptar"}) => {
-    console.log(err);
-    
     return (
         <button
             disabled={err}

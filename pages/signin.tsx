@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import PrimaryButton from "../components/buttons/primary";
 import Input from "../components/forms/input";
+import { API_URL } from "../config";
 
 const Signin: NextPage = () => {
     const [err, setError] = useState(false);
@@ -21,11 +22,12 @@ const Signin: NextPage = () => {
 
         const username = e.target.username.value;
         const password = e.target.password.value;
-
-        axios.post("https://paidify-api.azurewebsites.net/v1/auth/login", {
+        
+        axios.post(`${API_URL}/auth/login`, {
             username,
             password
         }).then((res) => {
+            console.log(res);
             setCookie("token", res.data.token, {
                 path: "/",
                 maxAge: 3600, // Expires after 1hr
