@@ -3,6 +3,7 @@ import Header from "../components/header";
 import Cards from "react-credit-cards";
 import jwt from "jsonwebtoken";
 import Slider from "react-slick";
+import Image from "next/image";
 
 import 'react-credit-cards/es/styles-compiled.css';
 import Cookies from "cookies";
@@ -11,6 +12,7 @@ import { useState } from "react";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Router from "next/router";
 
 type card = {
     card_number: number;
@@ -23,6 +25,9 @@ type card = {
 const PaymentMethods = ({ data }: { data: card[] }) => {
     const [cards, setCards] = useState(data);
 
+    const redirect = () => {
+        Router.push('/payment-methods/add');
+    }
     var settings = {
         dots: true,
         infinite: true,
@@ -40,7 +45,12 @@ const PaymentMethods = ({ data }: { data: card[] }) => {
             <main className="">
                 <div style={{ height: '80vh' }} className="flex">
 
-                    <div className=" m-auto w-full">
+                    <div style={{ width: "330px", maxWidth: "65%" }} className="m-auto text-right">                    
+                        <div className="">
+                            <button onClick={redirect} className="mb-4 mr-2.5 hover:scale-105 text-2xl bg-green-500 text-white rounded-full w-11 h-11">
+                                +
+                            </button>
+                        </div>
                         <Slider {...settings}>
                             {
                                 cards.map((card) => (
