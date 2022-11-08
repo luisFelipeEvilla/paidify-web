@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "../components/header";
+import Header from "../../components/header";
 import Cards from "react-credit-cards";
 import jwt from "jsonwebtoken";
 import Slider from "react-slick";
@@ -7,7 +7,7 @@ import Image from "next/image";
 
 import 'react-credit-cards/es/styles-compiled.css';
 import Cookies from "cookies";
-import { API_URL } from "../config";
+import { API_URL } from "../../config";
 import { useState } from "react";
 
 import "slick-carousel/slick/slick.css";
