@@ -15,8 +15,9 @@ type invoices = { data: invoice[] };
 const Home = ({ data } : invoices) => {
   const [invoices, setInvoices] = useState(data);
   
+  console.log(invoices);
+  
   function handleChange (search: any) {
-    
     setInvoices(
       data.filter((invoice: any) => {
         return invoice.concept.toLowerCase().includes(search.toLowerCase());

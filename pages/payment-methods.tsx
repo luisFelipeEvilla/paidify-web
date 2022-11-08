@@ -2,22 +2,34 @@ import Head from "next/head";
 import Header from "../components/header";
 import Cards from "react-credit-cards";
 import jwt from "jsonwebtoken";
+import Slider from "react-slick";
 
 import 'react-credit-cards/es/styles-compiled.css';
 import Cookies from "cookies";
 import { API_URL } from "../config";
 import { useState } from "react";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 type card = {
-    cardNumber: number;
+    card_number: number;
     exp_month: number;
     exp_year: number;
     cvv: number;
     owner: string;
 }
 
-const PaymentMethods = ({data} : {data: card[]}) => {
+const PaymentMethods = ({ data }: { data: card[] }) => {
     const [cards, setCards] = useState(data);
+
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
 
     return (
         <>
@@ -27,18 +39,23 @@ const PaymentMethods = ({data} : {data: card[]}) => {
             <Header />
             <main className="">
                 <div style={{ height: '80vh' }} className="flex">
-                    
-                    <div className=" m-auto">
-                        {
-                            cards.map((card) => (
-                                <Cards 
-                                    number={card.cardNumber + ""}
-                                    name={card.owner}
-                                    expiry={`${card.exp_month}/${card.exp_year}`}
-                                    cvc={card.cvv}
-                                />
-                            ))
-                        }
+
+                    <div className=" m-auto w-full">
+                        <Slider {...settings}>
+                            {
+                                cards.map((card) => (
+                                    <div className="div">
+                                        <Cards
+                                            number={card.card_number + ""}
+                                            name={card.owner}
+                                            expiry={`${card.exp_month}/${card.exp_year}`}
+                                            cvc={card.cvv}
+
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </Slider>
                     </div>
                 </div>
 
@@ -48,7 +65,7 @@ const PaymentMethods = ({data} : {data: card[]}) => {
     )
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req, res }: any) {
     const cookies = new Cookies(req, res);
 
     const token = cookies.get('token') as string;
@@ -65,9 +82,41 @@ export async function getServerSideProps({ req, res }) {
         }
     });
 
-    const data = await response.json();
-    
-    return { props: {data}}
+    //   const data = await response.json();
+
+    const data = [
+        {
+            id: 8,
+            owner: 'luis F',
+            card_number: '3700 0000 0000 002',
+            exp_month: '06',
+            exp_year: '22',
+            cvv: '123',
+            type: 'credit',
+            category: 'visa'
+        },
+        {
+            id: 8,
+            owner: 'ENRIQUE VÉLEZ',
+            card_number: '5425233430109903',
+            exp_month: '10',
+            exp_year: '32',
+            cvv: '1234',
+            type: 'credit',
+            category: 'visa'
+        },
+        {
+            id: 8,
+            owner: 'ENRIQUE VÉLEZ',
+            card_number: '4263982640269299',
+            exp_month: '10',
+            exp_year: '32',
+            cvv: '1234',
+            type: 'credit',
+            category: 'visa'
+        }
+    ]
+    return { props: { data } }
 }
 
 export default PaymentMethods;
