@@ -71,7 +71,7 @@ export async function getServerSideProps({req, res} : any) {
   const user = jwt.decode(token) as { id: number };
   
   const url = `${API_URL}/users/${user?.id}/invoices`;
-
+  
   const response = await fetch(url, {
     method: 'GET',
     headers: {

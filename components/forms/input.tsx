@@ -30,7 +30,7 @@ const Input = (props: InputProps) => {
                 <div className={"flex flex-row align-items " + inputDesign}>
                     <input className="w-full y-full focus:outline-none" {...props} />
                     <div style={{ position: "relative", width: "20px", heigth: "20px"}} >
-                        <Image onClick={showPassword} className="hover:cursor-pointer p-1" src="/icons8-eye-30.png" alt="Vercel Logo" layout="fill" objectFit="contain" />
+                        <Image onClick={showPassword} className="hover:cursor-pointer p-1" src="/icons/icons8-eye-30.png" alt="Vercel Logo" layout="fill" objectFit="contain" />
                     </div>
                 </div>
             </div>

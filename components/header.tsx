@@ -13,7 +13,7 @@ const Header = () => {
 
     return (
         <nav className="flex justify-between mx-32 mt-4">
-                <a href="">
+                <a href="/">
                     <Image src="/images/logo.svg" width={200} height={55} />
                 </a>
             <ul className="flex justify-around font-bold text-xl">
