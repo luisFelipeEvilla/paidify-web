@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { NextPage } from "next";
 import Image from 'next/image'
 import Link from "next/link";
@@ -22,11 +22,16 @@ const Signin: NextPage = () => {
 
         const username = e.target.username.value;
         const password = e.target.password.value;
+
+        const headers = {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+          }
         
-        axios.post(`${API_URL}/auth/login`, {
+        axios.post(`${API_URL}/login`, {
             username,
             password
-        }).then((res) => {
+        }, headers as AxiosRequestConfig).then((res) => {
             console.log(res);
             setCookie("token", res.data.token, {
                 path: "/",
