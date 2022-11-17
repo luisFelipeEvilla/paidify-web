@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import Header from '../components/header';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import Invoice from '../components/invoice';
+import Invoice from '../components/paymentConcept';
 import SearchBar from '../components/searchBar';
 import { useState } from 'react';
 import Cookies from 'cookies';
@@ -10,11 +8,11 @@ import jwt from 'jsonwebtoken';
 import { API_URL } from '../config';
 import PayConcept from '../domain/pay-concepts';
 import payConceptsData from '../repositories/pay-concepts';
+import Hero from '../components/Hero';
 
 type payConcepts = { data: PayConcept[] };
 
 const Home = ({ data } : payConcepts) => {
-  console.log(data);
   const [invoices, setInvoices] = useState(data);
   
   
@@ -35,11 +33,8 @@ const Home = ({ data } : payConcepts) => {
       </Head>
 
       <main>
-        <Header></Header>
-        <div className={styles.hero + " mt-8 "}>
-          <Image src="/images/hero.png" width={620} height={310} />
-        </div>
-
+        <Header/>
+        <Hero/>
         <div className="flex">
           <div className="m-auto">
             <SearchBar
@@ -53,7 +48,11 @@ const Home = ({ data } : payConcepts) => {
               concept={invoice.payment_concept}
               paymentDate={invoice.pay_before}
               invoiceNumber={invoice.ref_number}
-              amount={invoice.amount} />
+              amount={invoice.amount} 
+              state={null}
+              isConcept={true}
+              effectiveDate={null}
+              />
           ))
         }
       </main>

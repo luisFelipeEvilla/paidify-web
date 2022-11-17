@@ -17,11 +17,6 @@ class Invoices {
     
 }
 
-class PaymentConcept {
-    payment_concept!: string;
-    amount!: number;
-}
-
 class Payer {
     guest_id!: number;
     first_name!: string;
