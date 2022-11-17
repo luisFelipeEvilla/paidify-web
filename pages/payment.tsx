@@ -1,9 +1,13 @@
 import Head from "next/head";
 import Header from "../components/header";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Payment = () => {
+    const router = useRouter();
 
+    const { concept, invoiceNumber, amount} = router.query;
+    const  amountNumber = Number(amount);
     return (
         <>
             <Head>
@@ -41,10 +45,11 @@ const Payment = () => {
 
                             <h3 className="font-bold mb-6">Resumen de compra</h3>
 
-                            <div>
-                                <p><b>Referencia:</b> 30239039</p>
-                                <p><b>Descripcion:</b> Pago de matricula</p>
-                                <p><b>Total a pagar:</b>  COP 546.000</p>
+                            <div style={{width: '300px'}} className="">
+                                <p><b>Referencia:</b> {invoiceNumber}</p>
+                                <p className=""><b>Descripcion:</b> {concept} 
+                                </p>
+                                <p><b>Total a pagar:</b>  COP {amountNumber.toLocaleString()}</p>
                             </div>
                         </div>
                     </div>

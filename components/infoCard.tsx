@@ -35,7 +35,8 @@ const InfoCard = (props: invoice) => {
   }
 
   return (
-    <div className='shadow-lg border-gray-300 border p-8 mx-auto my-12 flex justify-between rounded w-6/12'>
+    <div style={{ maxWidth: '650px'}}
+    className='shadow-lg border-gray-300 border p-8 mx-auto my-12 flex justify-between rounded w-6/12'>
       <div>
         <div className='flex'>
           <p> <b>Concepto: </b> {props.concept} </p>
@@ -51,7 +52,13 @@ const InfoCard = (props: invoice) => {
           props.isConcept ?
             <>
               <p> <b> ${props.amount.toLocaleString()} </b> </p>
-              <Link href="">
+              <Link href={{
+                pathname: '/payment', query: {
+                  concept: props.concept,
+                  invoiceNumber: props.invoiceNumber,
+                  amount: props.amount
+                }
+              }}>
                 <a className=''>
                   <PrimaryButton text="Pagar" color={"blue"} />
                 </a>
@@ -62,7 +69,7 @@ const InfoCard = (props: invoice) => {
               <p className={`text-${getColor()}-500`}> <b> {getState()} </b> </p>
               <p> <b> ${props.amount.toLocaleString()} </b> </p>
             </>
-          }
+        }
       </div>
 
     </div>

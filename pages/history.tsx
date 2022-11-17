@@ -2,13 +2,14 @@ import Cookies from "cookies";
 import Head from "next/head";
 import { useState } from "react";
 import Header from "../components/header";
-import Hero from "../components/Hero";
+import Hero from "../components/hero";
 import Invoice from "../components/infoCard";
 import SearchBar from "../components/searchBar";
 import jwt from "jsonwebtoken";
 import { API_URL } from "../config";
 import Payment from "../domain/payment";
 import paymentsData from "../repositories/payments";
+import { fetchData, getUserData } from "../utils/utiils";
 
 type payments = { data: Payment[] };
 
@@ -63,25 +64,12 @@ const History = ({data}: payments) => {
 }
 
 export async function getServerSideProps({req, res} : any) {
-    const cookies = new Cookies(req, res);
+    const user = await getUserData(req, res);
+    const data = await fetchData(`/users/${user.id}/invoices`, req, res);
   
-    const token = cookies.get('token') as string;
-    
-    const user = jwt.decode(token) as { id: number };
-    
-    const url = `${API_URL}/users/${user?.id}/invoices`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    
-    const data = await response.json(); 
     
     return {
+    //todo return real data when the api is ready
       props: { data:  paymentsData}
     }
   }
