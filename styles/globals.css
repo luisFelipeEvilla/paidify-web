@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@600,700&display=swap');
+
+html,
+body {
+  font-family: 'Montserrat', sans-serif;;
+  padding: 0;
+  margin: 0;
+}
+
+.visible {
+  display: block;
+}
+
+nav {
+  font-family: 'Open Sans', sans-serif;
+}
+
+nav li {
+  color: #299EFE;
+}
+
+nav li a:hover {
+  display: inline-block;
+  transform: scale(1.05);
+  opacity: 0.75;
+}
+
+nav button {
+  background-color: #299EFE;
+}
+
+nav button:hover {
+  transform: scale(1.05);
+}
