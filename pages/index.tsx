@@ -31,12 +31,6 @@ const Home = ({ data }: payConcepts) => {
 
   return (
     <div>
-      <Head>
-        <title>Paidify</title>
-        <meta name="description" content="Created by Luis Felipe Evilla Rodriguez" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main>
         <Header />
         <Hero />
