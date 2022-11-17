@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useState } from "react";
 import Header from "../components/header";
 import Hero from "../components/Hero";
-import Invoice from "../components/paymentConcept";
+import Invoice from "../components/infoCard";
 import SearchBar from "../components/searchBar";
 import jwt from "jsonwebtoken";
 import { API_URL } from "../config";

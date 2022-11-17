@@ -11,7 +11,7 @@ type invoice = {
   effectiveDate: string | null;
 }
 
-const Invoice = (props: invoice) => {
+const InfoCard = (props: invoice) => {
   const paymentDate = new Date(props.paymentDate);
 
   const getState = () => {
@@ -69,4 +69,4 @@ const Invoice = (props: invoice) => {
   )
 }
 
-export default Invoice;
+export default InfoCard;

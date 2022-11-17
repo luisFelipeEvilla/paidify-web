@@ -1,18 +1,26 @@
 import Head from "next/head";
-import Header from "../../components/header";
+import { useState } from "react";
+import Router from "next/router";
+
+// third party libraries
 import Cards from "react-credit-cards";
 import jwt from "jsonwebtoken";
 import Slider from "react-slick";
-import Image from "next/image";
-
-import 'react-credit-cards/es/styles-compiled.css';
 import Cookies from "cookies";
-import { API_URL } from "../../config";
-import { useState } from "react";
 
+// css for carrousels
+import 'react-credit-cards/es/styles-compiled.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Router from "next/router";
+
+// config vars
+import { API_URL } from "../../config";
+
+// components
+import Header from "../../components/header";
+
+// fake data
+import creditCards from "../../domain/creditCards";
 
 type card = {
     card_number: number;
@@ -93,40 +101,7 @@ export async function getServerSideProps({ req, res }: any) {
     });
 
     //   const data = await response.json();
-
-    const data = [
-        {
-            id: 8,
-            owner: 'luis F',
-            card_number: '3700 0000 0000 002',
-            exp_month: '06',
-            exp_year: '22',
-            cvv: '123',
-            type: 'credit',
-            category: 'visa'
-        },
-        {
-            id: 8,
-            owner: 'ENRIQUE VÉLEZ',
-            card_number: '5425233430109903',
-            exp_month: '10',
-            exp_year: '32',
-            cvv: '1234',
-            type: 'credit',
-            category: 'visa'
-        },
-        {
-            id: 8,
-            owner: 'ENRIQUE VÉLEZ',
-            card_number: '4263982640269299',
-            exp_month: '10',
-            exp_year: '32',
-            cvv: '1234',
-            type: 'credit',
-            category: 'visa'
-        }
-    ]
-    return { props: { data } }
+    return { props: { data: creditCards } }
 }
 
 export default PaymentMethods;

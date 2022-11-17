@@ -1,13 +1,16 @@
-import axios, { AxiosRequestConfig } from "axios";
+
 import { NextPage } from "next";
 import Image from 'next/image'
 import Link from "next/link";
 import Router from "next/router";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+
+import axios, { AxiosRequestConfig } from "axios";
+import { API_URL } from "../config";
+
 import PrimaryButton from "../components/buttons/primary";
 import Input from "../components/forms/input";
-import { API_URL } from "../config";
 
 const Signin: NextPage = () => {
     const [err, setError] = useState(false);

@@ -1,6 +1,4 @@
-import { NextPage } from "next";
 import Link from "next/link";
-import { MouseEventHandler } from "react";
 import Input from "../components/forms/input";
 
 const Signup = () => {

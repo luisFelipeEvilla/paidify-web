@@ -1,16 +1,16 @@
-import Header from "../../components/header";
-import Cards, { Focused } from "react-credit-cards";
-
-import 'react-credit-cards/es/styles-compiled.css';
-import { useState } from "react";
-import Input from "../../components/forms/input";
-import PrimaryButton from "../../components/buttons/primary";
 import Head from "next/head";
+import { useState } from "react";
 
+import Cards, { Focused } from "react-credit-cards";
 import creditCardType from 'credit-card-type';
 import { useCookies } from "react-cookie";
+import 'react-credit-cards/es/styles-compiled.css';
 import jwt from "jsonwebtoken";
 import axios from "axios";
+
+import Header from "../../components/header";
+import Input from "../../components/forms/input";
+import PrimaryButton from "../../components/buttons/primary";
 
 const AddPaymentMethod = () => {
     const [cardNumber, setCardNumber] = useState("");
@@ -54,8 +54,6 @@ const AddPaymentMethod = () => {
         const card_category = creditCardType(cardNumber)[0].type;
 
         const user = jwt.decode(cookie.token) as { id: number, role: number };
-
-        console.log(cookie.token);
         
         if (user) {
             const data = {

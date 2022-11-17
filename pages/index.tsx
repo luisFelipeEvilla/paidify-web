@@ -1,14 +1,18 @@
-import Head from 'next/head'
-import Header from '../components/header';
-import Invoice from '../components/paymentConcept';
-import SearchBar from '../components/searchBar';
 import { useState } from 'react';
+import Head from 'next/head'
+
 import Cookies from 'cookies';
 import jwt from 'jsonwebtoken';
+
 import { API_URL } from '../config';
-import PayConcept from '../domain/pay-concepts';
+
+import Header from '../components/header';
+import Hero from '../components/hero';
+import InfoCard from '../components/infoCard';
+import SearchBar from '../components/searchBar';
+
+import PayConcept from '../domain/payConcepts';
 import payConceptsData from '../repositories/pay-concepts';
-import Hero from '../components/Hero';
 
 type payConcepts = { data: PayConcept[] };
 
@@ -44,7 +48,8 @@ const Home = ({ data } : payConcepts) => {
         </div>
         {
           invoices.map((invoice) => (
-            <Invoice
+            <InfoCard
+              key={invoice.id}
               concept={invoice.payment_concept}
               paymentDate={invoice.pay_before}
               invoiceNumber={invoice.ref_number}
