@@ -4,11 +4,13 @@ import PrimaryButton from "./buttons/primary";
 type invoice = {
     concept: string,
     paymentDate: string,
-    invoiceNumber: number,
+    invoiceNumber: string,
     amount: number
 }
 
 const Invoice = (props: invoice) => {
+  const paymentDate = new Date(props.paymentDate);
+
     return (
         <div className='shadow-lg border-gray-300 border p-8 mx-auto my-12 flex justify-between rounded w-6/12'>
         <div>
@@ -16,7 +18,7 @@ const Invoice = (props: invoice) => {
             <p> <b>Concepto: </b> {props.concept} </p>
           </div>
           <div >
-            <p className='pt-3'><b>Fecha de Pago: </b> { props.paymentDate} </p>
+            <p className='pt-3'><b>Fecha de Pago: </b> { paymentDate.toLocaleDateString()} </p>
             <p className='pt-1'><b>No. de Factura: </b> {props.invoiceNumber} </p>
           </div>
         </div>

@@ -8,7 +8,7 @@ const defaultProps = {
     type: "button"
 }
 
-const PrimaryButton = (props: primaryButtonProps) => {
+const PrimaryButton = (props: primaryButtonProps) => {    
     return (
         <button
             onClick={props.callback}

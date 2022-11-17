@@ -8,19 +8,20 @@ import { useState } from 'react';
 import Cookies from 'cookies';
 import jwt from 'jsonwebtoken';
 import { API_URL } from '../config';
+import PayConcept from '../domain/pay-concepts';
+import payConceptsData from '../repositories/pay-concepts';
 
-type invoice = { concept: string; paymentDate: string; invoiceNumber: number; amount: number; };
-type invoices = { data: invoice[] };
+type payConcepts = { data: PayConcept[] };
 
-const Home = ({ data } : invoices) => {
+const Home = ({ data } : payConcepts) => {
+  console.log(data);
   const [invoices, setInvoices] = useState(data);
   
-  console.log(invoices);
   
   function handleChange (search: any) {
     setInvoices(
-      data.filter((invoice: any) => {
-        return invoice.concept.toLowerCase().includes(search.toLowerCase());
+      data.filter((invoice: PayConcept) => {
+        return invoice.payment_concept.toLowerCase().includes(search.toLowerCase());
       })
     );
   };
@@ -49,9 +50,9 @@ const Home = ({ data } : invoices) => {
         {
           invoices.map((invoice) => (
             <Invoice
-              concept={invoice.concept}
-              paymentDate={invoice.paymentDate}
-              invoiceNumber={invoice.invoiceNumber}
+              concept={invoice.payment_concept}
+              paymentDate={invoice.pay_before}
+              invoiceNumber={invoice.ref_number}
               amount={invoice.amount} />
           ))
         }
@@ -83,7 +84,7 @@ export async function getServerSideProps({req, res} : any) {
   const data = await response.json(); 
   
   return {
-    props: {data}
+    props: { data: payConceptsData }
   }
 }
 
