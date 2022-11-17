@@ -45,6 +45,7 @@ const History = ({data}: payments) => {
                 {
                     invoices.map((invoice: Payment) => (
                         <Invoice
+                            key={invoice.id}
                             concept={invoice.payment_concept.payment_concept}
                             paymentDate={invoice.date}
                             invoiceNumber={invoice.ref_number}

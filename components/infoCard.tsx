@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import PrimaryButton from "./buttons/primary";
 
 type invoice = {
@@ -13,26 +14,21 @@ type invoice = {
 
 const InfoCard = (props: invoice) => {
   const paymentDate = new Date(props.paymentDate);
+  const [color, setColor] = useState('yellow');
+  const [state, setState] = useState('Pendiente');
 
-  const getState = () => {
+  useEffect(() => {
     if (props.state === 1) {
-      return "Exitoso";
+      setColor('green');
+      setState('Exitoso');	
     } else if (props.effectiveDate === undefined) {
-      return "Pendiente";
+      setColor("yellow");
+      setState("Pendiente");
     } else {
-      return "Fallido";
+      setColor("red");
+      setState("Fallido");
     }
-  }
-
-  const getColor = () => {
-    if (props.state === 1) {
-      return "green";
-    } else if (props.effectiveDate === undefined) {
-      return "yellow";
-    } else {
-      return "red";
-    }
-  }
+  }, [])
 
   return (
     <div style={{ maxWidth: '650px'}}
@@ -53,7 +49,7 @@ const InfoCard = (props: invoice) => {
             <>
               <p> <b> ${props.amount.toLocaleString()} </b> </p>
               <Link href={{
-                pathname: '/payment', query: {
+                pathname: '/orderResume', query: {
                   concept: props.concept,
                   invoiceNumber: props.invoiceNumber,
                   amount: props.amount
@@ -66,7 +62,7 @@ const InfoCard = (props: invoice) => {
             </>
             :
             <>
-              <p className={`text-${getColor()}-500`}> <b> {getState()} </b> </p>
+              <p className={`text-${color}-500`}> <b> {state} </b> </p>
               <p> <b> ${props.amount.toLocaleString()} </b> </p>
             </>
         }
