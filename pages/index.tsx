@@ -16,11 +16,10 @@ import payConceptsData from '../repositories/pay-concepts';
 
 type payConcepts = { data: PayConcept[] };
 
-const Home = ({ data } : payConcepts) => {
+const Home = ({ data }: payConcepts) => {
   const [invoices, setInvoices] = useState(data);
-  
-  
-  function handleChange (search: any) {
+
+  function handleChange(search: any) {
     setInvoices(
       data.filter((invoice: PayConcept) => {
         return invoice.payment_concept.toLowerCase().includes(search.toLowerCase());
@@ -37,8 +36,8 @@ const Home = ({ data } : payConcepts) => {
       </Head>
 
       <main>
-        <Header/>
-        <Hero/>
+        <Header />
+        <Hero />
         <div className="flex">
           <div className="m-auto">
             <SearchBar
@@ -53,30 +52,29 @@ const Home = ({ data } : payConcepts) => {
               concept={invoice.payment_concept}
               paymentDate={invoice.pay_before}
               invoiceNumber={invoice.ref_number}
-              amount={invoice.amount} 
+              amount={invoice.amount}
               state={null}
               isConcept={true}
               effectiveDate={null}
-              />
+            />
           ))
         }
       </main>
 
-      <footer>
-      </footer>
+      <footer />
     </div>
   )
 };
 
-export async function getServerSideProps({req, res} : any) {
+export async function getServerSideProps({ req, res }: any) {
   const cookies = new Cookies(req, res);
 
   const token = cookies.get('token') as string;
-  
+
   const user = jwt.decode(token) as { id: number };
-  
+
   const url = `${API_URL}/users/${user?.id}/invoices`;
-  
+
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -84,9 +82,9 @@ export async function getServerSideProps({req, res} : any) {
       'Authorization': `Bearer ${token}`
     }
   });
-  
-  const data = await response.json(); 
-  
+
+  // const data = await response.json();
+
   return {
     props: { data: payConceptsData }
   }
