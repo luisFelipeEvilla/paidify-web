@@ -9,13 +9,12 @@ import Hero from '../components/hero';
 
 import { ROLE_ADMIN, ROLE_USER } from '../utils/constants';
 
-const Index = () => {
+const Index = () => { // works as route / and as handler for non allowed routes
   const { user : { role } } : any = useContext(AppState);
   const router = useRouter();
 
   useEffect(() => {
-    router.replace(role === ROLE_ADMIN ? '/admin' : role === ROLE_USER ? '/user' : '/guest')
-      .then(() => {});
+    router.replace(role === ROLE_ADMIN ? '/admin' : role === ROLE_USER ? '/user' : '/guest');
   }, []);
   
   return (

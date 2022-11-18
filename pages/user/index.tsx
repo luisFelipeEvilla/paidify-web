@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 
 import { API_URL } from '../../config';
 
-import Header from '../../components/header';
+import Header from '../../components/user/header';
 import Hero from '../../components/hero';
 import InfoCard from '../../components/infoCards/payConceptPerson';
 import SearchBar from '../../components/searchBar';
@@ -90,12 +90,10 @@ export async function getServerSideProps({ req, res }: any) {
     }
   }
 
-  const url = `${API_URL}/users/${user.id}/pay-concepts`;
-
   let response;
 
   try {
-    response = await fetch(url, {
+    response = await fetch(`${API_URL}/users/${user.id}/pay-concepts`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -108,11 +106,9 @@ export async function getServerSideProps({ req, res }: any) {
     }
   }
 
-  const status = response.status;
-
   let data;
 
-  if (status === 200) {
+  if (response.status === 200) {
     data = await response.json();
   } else {
     return {

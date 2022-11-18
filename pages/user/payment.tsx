@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "../../components/header";
+import Header from "../../components/user/header";
 import Image from "next/image";
 
 const Payment = () => {

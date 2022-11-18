@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 import { API_URL } from '../../config';
 
-import Header from '../../components/header';
+import Header from '../../components/guest/header';
 import Hero from '../../components/hero';
 import InfoCard from '../../components/infoCards/payConcept';
 import SearchBar from '../../components/searchBar';
@@ -58,12 +58,10 @@ const Home = ({ data }: { data: PayConcept[] }) => {
 };
 
 export async function getServerSideProps() {
-  const url = API_URL + '/pay-concepts';
-
   let response;
 
   try {
-    response = await fetch(url, {
+    response = await fetch(API_URL + '/pay-concepts', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     });
@@ -73,11 +71,9 @@ export async function getServerSideProps() {
     }
   }
   
-  const status = response.status;
-
   let data;
 
-  if (status === 200) {
+  if (response.status === 200) {
     data = await response.json();
   } else {
     return {

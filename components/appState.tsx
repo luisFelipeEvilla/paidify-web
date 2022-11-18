@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 export const AppState = createContext({});
 
 const AuthProvider = ({ children } : any) => {
-    const [cookies, setCookie, removeCookie] = useCookies([ACCESS_TOKEN]);
+    const [cookies] = useCookies([ACCESS_TOKEN]);
     
     const token = cookies[ACCESS_TOKEN] as string;
     
@@ -17,7 +17,7 @@ const AuthProvider = ({ children } : any) => {
         user = { role: ROLE_GUEST } as { role: number, id: number };
     }
     
-    const context = { user, setCookie, removeCookie };
+    const context = { user };
     
     return (
         <AppState.Provider value={context}>{children}</AppState.Provider>
