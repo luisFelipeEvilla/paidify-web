@@ -1,32 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useContext } from 'react';
+import { useRouter } from 'next/router';
+
+import { AppState } from '../components/appState';
+
 import Head from 'next/head'
-
-import Cookies from 'cookies';
-import jwt from 'jsonwebtoken';
-
-import { API_URL } from '../config';
-
 import Header from '../components/header';
 import Hero from '../components/hero';
-import InfoCard from '../components/infoCard';
-import SearchBar from '../components/searchBar';
 
-import PayConcept from '../domain/payConcepts';
-import payConceptsData from '../repositories/pay-concepts';
+import { ROLE_ADMIN, ROLE_USER } from '../utils/constants';
 
-type payConcepts = { data: PayConcept[] };
+const Index = () => {
+  const { user : { role } } : any = useContext(AppState);
+  const router = useRouter();
 
-const Home = ({ data }: payConcepts) => {
-  const [invoices, setInvoices] = useState(data);
-
-  function handleChange(search: any) {
-    setInvoices(
-      data.filter((invoice: PayConcept) => {
-        return invoice.payment_concept.toLowerCase().includes(search.toLowerCase());
-      })
-    );
-  };
-
+  useEffect(() => {
+    router.replace(role === ROLE_ADMIN ? '/admin' : role === ROLE_USER ? '/user' : '/guest')
+    .then(() => {
+      console.log('redirected');
+    });
+  }, []);
+  
   return (
     <div>
       <Head>
@@ -38,27 +31,6 @@ const Home = ({ data }: payConcepts) => {
       <main>
         <Header />
         <Hero />
-        <div className="flex">
-          <div className="m-auto">
-            <SearchBar
-              handleChange={handleChange}
-            ></SearchBar>
-          </div>
-        </div>
-        {
-          invoices.map((invoice) => (
-            <InfoCard
-              key={invoice.id}
-              concept={invoice.payment_concept}
-              paymentDate={invoice.pay_before}
-              invoiceNumber={invoice.ref_number}
-              amount={invoice.amount}
-              state={null}
-              isConcept={true}
-              effectiveDate={null}
-            />
-          ))
-        }
       </main>
 
       <footer />
@@ -66,28 +38,4 @@ const Home = ({ data }: payConcepts) => {
   )
 };
 
-export async function getServerSideProps({ req, res }: any) {
-  const cookies = new Cookies(req, res);
-
-  const token = cookies.get('token') as string;
-
-  const user = jwt.decode(token) as { id: number };
-
-  const url = `${API_URL}/users/${user?.id}/invoices`;
-
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
-  });
-
-  // const data = await response.json();
-
-  return {
-    props: { data: payConceptsData }
-  }
-}
-
-export default Home
+export default Index;

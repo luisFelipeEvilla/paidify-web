@@ -2,12 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
 import { useCookies } from "react-cookie";
+import { ACCESS_TOKEN } from "../utils/constants";
 
 const Header = () => {
-    const [cookie, setCookie, removeCookie] = useCookies(["token"]);
+    const [cookie, setCookie, removeCookie] = useCookies([ACCESS_TOKEN]);
 
     const handleLogout = () => {
-        removeCookie("token");
+        removeCookie(ACCESS_TOKEN);
         Router.push("/signin");
     }
 

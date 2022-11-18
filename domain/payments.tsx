@@ -1,4 +1,4 @@
-import PaymentConcept from "./paymentConcept";
+import PayConcept from "./payConcepts";
 
 class Payment {
     id!: number;
@@ -14,7 +14,7 @@ class Payment {
     successful: number | undefined ;
     guest_id: number | undefined ;
     campus!: string;
-    payment_concept!: PaymentConcept;
+    payment_concept!: PayConcept;
 }
 
 export default Payment;

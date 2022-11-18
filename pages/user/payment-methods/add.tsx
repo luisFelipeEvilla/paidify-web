@@ -11,6 +11,7 @@ import axios from "axios";
 import Header from "../../components/header";
 import Input from "../../components/forms/input";
 import PrimaryButton from "../../components/buttons/primary";
+import { ACCESS_TOKEN } from "../../utils/constants";
 
 const AddPaymentMethod = () => {
     const [cardNumber, setCardNumber] = useState("");
@@ -18,7 +19,7 @@ const AddPaymentMethod = () => {
     const [cardExpire, setCardExpire] = useState("");
     const [cardCvv, setCardCvv] = useState("");
     const [focus, setFocus] = useState("name");
-    const [cookie, setCookie] = useCookies(["token"]);
+    const [cookie, setCookie] = useCookies([ACCESS_TOKEN]);
 
     const handleChange = (field: string, event: any) => {
         const value = event.target.value;
@@ -53,7 +54,7 @@ const AddPaymentMethod = () => {
 
         const card_category = creditCardType(cardNumber)[0].type;
 
-        const user = jwt.decode(cookie.token) as { id: number, role: number };
+        const user = jwt.decode(cookie[ACCESS_TOKEN]) as { id: number, role: number };
         
         if (user) {
             const data = {
@@ -71,7 +72,7 @@ const AddPaymentMethod = () => {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookie.token}`
+                    'Authorization': `Bearer ${cookie[ACCESS_TOKEN]}`
                 }
             });
         }

@@ -1,14 +1,14 @@
-type primaryButtonProps = {callback: any, err: boolean, color: string, text: string, type: string} & typeof defaultProps;
+type primaryButtonProps = { callback: any, err: boolean, color: string, text: string, type: string } & typeof defaultProps;
 
 const defaultProps = {
-    callback: () => {},
+    callback: () => { },
     err: false,
     color: "green",
     text: "Aceptar",
     type: "button"
 }
 
-const PrimaryButton = (props: primaryButtonProps) => {    
+const PrimaryButton = (props: primaryButtonProps) => {
     return (
         <button
             onClick={props.callback}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PrimaryButton from "./buttons/primary";
+import PrimaryButton from "../buttons/primary";
 
 type invoice = {
   concept: string,

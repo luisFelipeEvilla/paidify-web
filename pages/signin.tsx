@@ -11,10 +11,11 @@ import { API_URL } from "../config";
 
 import PrimaryButton from "../components/buttons/primary";
 import Input from "../components/forms/input";
+import { ACCESS_TOKEN } from "../utils/constants";
 
 const Signin: NextPage = () => {
     const [err, setError] = useState(false);
-    const [cookie, setCookie] = useCookies(["token"]);
+    const [cookie, setCookie] = useCookies([ACCESS_TOKEN]);
 
     const handleOnCahnge = () => {
         if (err) setError(false);
@@ -36,7 +37,7 @@ const Signin: NextPage = () => {
             password
         }, headers as AxiosRequestConfig).then((res) => {
             console.log(res);
-            setCookie("token", res.data.token, {
+            setCookie(ACCESS_TOKEN, res.data.token, {
                 path: "/",
                 maxAge: 3600, // Expires after 1hr
                 sameSite: true,

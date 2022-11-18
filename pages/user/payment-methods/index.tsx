@@ -21,6 +21,7 @@ import Header from "../../components/header";
 
 // fake data
 import creditCards from "../../domain/creditCards";
+import { ACCESS_TOKEN } from "../../../utils/constants";
 
 type card = {
     card_number: number;
@@ -86,7 +87,7 @@ const PaymentMethods = ({ data }: { data: card[] }) => {
 export async function getServerSideProps({ req, res }: any) {
     const cookies = new Cookies(req, res);
 
-    const token = cookies.get('token') as string;
+    const token = cookies.get(ACCESS_TOKEN) as string;
 
     const user = jwt.decode(token) as { id: number };
 

@@ -2,13 +2,14 @@ import Cookies from "cookies";
 import Head from "next/head";
 import { useState } from "react";
 import Header from "../components/header";
-import Hero from "../components/Hero";
+import Hero from "../components/hero";
 import Invoice from "../components/infoCard";
 import SearchBar from "../components/searchBar";
 import jwt from "jsonwebtoken";
 import { API_URL } from "../config";
-import Payment from "../domain/payment";
+import Payment from "../domain/payments";
 import paymentsData from "../repositories/payments";
+import { ACCESS_TOKEN } from "../utils/constants";
 
 type payments = { data: Payment[] };
 
@@ -65,7 +66,7 @@ const History = ({data}: payments) => {
 export async function getServerSideProps({req, res} : any) {
     const cookies = new Cookies(req, res);
   
-    const token = cookies.get('token') as string;
+    const token = cookies.get(ACCESS_TOKEN) as string;
     
     const user = jwt.decode(token) as { id: number };
     
