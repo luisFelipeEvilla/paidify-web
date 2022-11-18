@@ -15,9 +15,7 @@ const Index = () => {
 
   useEffect(() => {
     router.replace(role === ROLE_ADMIN ? '/admin' : role === ROLE_USER ? '/user' : '/guest')
-    .then(() => {
-      console.log('redirected');
-    });
+      .then(() => {});
   }, []);
   
   return (

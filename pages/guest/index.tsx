@@ -11,6 +11,7 @@ import SearchBar from '../../components/searchBar';
 import PayConcept from '../../domain/payConcepts';
 
 const Home = ({ data }: { data: PayConcept[] }) => {
+
   const [payConcepts, setPayConcepts] = useState(data);
 
   function handleChange(search: any) {
@@ -56,7 +57,7 @@ const Home = ({ data }: { data: PayConcept[] }) => {
   )
 };
 
-export async function getServerSideProps({ req, res }: any) {
+export async function getServerSideProps() {
   const url = API_URL + '/pay-concepts';
 
   let response;

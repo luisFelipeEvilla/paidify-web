@@ -4,15 +4,22 @@ import type { AppProps } from 'next/app'
 import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router";
 import Index from "./index";
-import { ACCESS_TOKEN, ROLE_ADMIN, ROLE_USER } from '../utils/constants';
+import { ACCESS_TOKEN, ROLE_ADMIN, ROLE_GUEST, ROLE_USER } from '../utils/constants';
 
 import jwt from 'jsonwebtoken';
 import AuthProvider from '../components/appState';
+import { useEffect, useState } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
-
+  const [showChild, setShowChild] = useState(false);
   const [cookies, _, removeCookie] = useCookies([ACCESS_TOKEN]);
   const router = useRouter();
+
+  useEffect(() => setShowChild(true), []);
+
+  if (!showChild) return null; //IMPORTANT: show child after first render, otherwise you will get an error
+
+  // if (typeof window === 'undefined') return <></>; //not sure if this is needed, but i leave it here just in case
 
   let allowed = true;
 
@@ -28,6 +35,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         allowed = false;
       } else if (router.pathname.startsWith('/user') && role !== ROLE_USER) {
         allowed = false;
+      } else if (router.pathname.startsWith('/guest') && role !== ROLE_GUEST) {
+        allowed = false;
       }
       
     } else {
@@ -38,6 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   } else {
     if(router.pathname.startsWith('/admin') || router.pathname.startsWith('/user')) {
+    // if(!router.pathname.startsWith('/guest')) {
       allowed = false;
     }
   }
