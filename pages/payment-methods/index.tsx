@@ -21,6 +21,7 @@ import Header from "../../components/header";
 
 // fake data
 import creditCards from "../../domain/creditCards";
+import { fetchData, getUserData } from "../../utils/utiils";
 
 type card = {
     card_number: number;
@@ -53,7 +54,7 @@ const PaymentMethods = ({ data }: { data: card[] }) => {
             <main className="">
                 <div style={{ height: '80vh' }} className="flex">
 
-                    <div style={{ width: "330px", maxWidth: "65%" }} className="m-auto text-right">                    
+                    <div style={{ width: "330px", maxWidth: "65%" }} className="m-auto text-right">
                         <div className="">
                             <button onClick={redirect} className="mb-4 mr-2.5 hover:scale-105 text-2xl bg-green-500 text-white rounded-full w-11 h-11">
                                 +
@@ -84,24 +85,15 @@ const PaymentMethods = ({ data }: { data: card[] }) => {
 }
 
 export async function getServerSideProps({ req, res }: any) {
-    const cookies = new Cookies(req, res);
+    const user = await getUserData(req, res);
+    const data = await fetchData(`/users/${user.id}/cards`, req, res);
 
-    const token = cookies.get('token') as string;
-
-    const user = jwt.decode(token) as { id: number };
-
-    const url = `${API_URL}/users/${user?.id}/cards`;
-
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+    return {
+        props: {
+            // todo return real data when the endpoint is ready
+            data: creditCards
         }
-    });
-
-    //   const data = await response.json();
-    return { props: { data: creditCards } }
+    }
 }
 
 export default PaymentMethods;

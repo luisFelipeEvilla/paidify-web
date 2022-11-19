@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 type primaryButtonProps = {callback: any, err: boolean, color: string, text: string, type: string} & typeof defaultProps;
 
 const defaultProps = {
@@ -9,12 +11,16 @@ const defaultProps = {
 }
 
 const PrimaryButton = (props: primaryButtonProps) => {    
+    const [color, setColor] = useState(props.color);
+    
+    useEffect(() => setColor(props.color), [props.color]);
+    
     return (
         <button
             onClick={props.callback}
             disabled={props.err}
             className={`hover:scale-105 
-            ${props.err ? "bg-gray-500" : `bg-${props.color}-500 hover:bg-${props.color}-700`} 
+            ${props.err ? "bg-gray-500" : `bg-${color}-500 hover:bg-${props.color}-700`} 
             text-white font-bold my-4 py-2 px-4 rounded-lg w-32 `}
             type="submit">
             {props.text}
