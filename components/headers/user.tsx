@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import { ACCESS_TOKEN } from '../../utils/constants';
 

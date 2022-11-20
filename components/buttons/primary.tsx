@@ -9,7 +9,6 @@ const defaultProps = {
 }
 
 const PrimaryButton = (props: primaryButtonProps) => {    
-    // console.log(`bg-${props.color}-500 hover:bg-${props.color}-700`);
     
     return (
         <button

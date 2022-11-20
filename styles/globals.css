@@ -57,7 +57,7 @@ input:focus {
 }
 
 select {
-  padding: 6px 0;
+  padding: 6px 4px;
   padding-right: 16px;
   margin: 0;
   width: 100%;
@@ -65,5 +65,8 @@ select {
   border-radius: 0.25em;
   cursor: pointer;
   background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-  outline: none;
+}
+
+select:focus {
+  outline: 1px solid #b8b8b8;
 }
