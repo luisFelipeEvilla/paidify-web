@@ -18,22 +18,15 @@ import 'slick-carousel/slick/slick-theme.css';
 import PayConceptPerson from '../../domain/user/PayConceptPerson';
 import PayMethod from '../../domain/user/PayMethod';
 
-const Payment = ({ payConceptPerson, payMethods }: { payConceptPerson: PayConceptPerson, payMethods: PayMethod[] }) => {
+import PaymentForm from '../../components/payment/user';
+import Campus from '../../domain/general/Campus';
+import { withDots } from '../../utils/general';
+
+type Props = { payConceptPerson: PayConceptPerson, payMethods: PayMethod[], campuses: Campus[] };
+
+const Payment = ({ payConceptPerson, payMethods, campuses }: Props) => {
 	const { payment_concept, ref_number } = payConceptPerson;
 	const { amount, payment_concept: concept } = payment_concept;
-	const [payMethod, setPayMethod] = useState(payMethods[0]);
-
-	const settings = {
-		dots: true,
-		infinite: true,
-		speed: 500,
-		slidesToShow: 1,
-		slidesToScroll: 1
-	};
-
-	useEffect(() => {
-		console.log(payMethod);
-	}, [payMethod]);
 
 	return (
 		<>
@@ -45,28 +38,6 @@ const Payment = ({ payConceptPerson, payMethods }: { payConceptPerson: PayConcep
 				<div className='flex m-auto w-fit' style={{ height: '80vh' }}>
 					<div className='m-auto grid grid-cols-2  justify-items-center'>
 						
-						<div className='flex'>
-							<div style={{ width: '300px', maxWidth: '100%' }} className='my-auto'>
-								<h3 className='font-bold text-center mb-6'>Seleccione su método de pago:</h3>
-								
-								<Slider {...settings}>
-									{
-										payMethods.map((payMethod) => (
-											<div className='div' key={payMethod.id}>
-												<Cards
-													number={payMethod.card_number + ''}
-													name={payMethod.owner}
-													expiry={'**/**'}
-													cvc={'***'}
-												/>
-											</div>
-										))
-									}
-								</Slider>
-
-							</div>
-						</div>
-
 						<div className='py-14 px-10 shadow-md flex justify-center items-center border-gray-300 border flex-col rounded-lg'>
 
 							<div>
@@ -78,9 +49,11 @@ const Payment = ({ payConceptPerson, payMethods }: { payConceptPerson: PayConcep
 							<div className='text-gray-800'>
 								<p><b>Referencia:</b> {ref_number}</p>
 								<p><b>Descripción:</b> {concept}</p>
-								<p><b>Total a pagar:</b> COP {amount}</p>
+								<p><b>Total a pagar:</b> COP {withDots(amount)}</p>
 							</div>
 						</div>
+
+						<PaymentForm payMethods={payMethods} campuses={campuses}/>
 					</div>
 				</div>
 			</main>
@@ -131,49 +104,59 @@ export async function getServerSideProps({ req, res, query }: any) {
 		}
 	}
 
-	let response;
-
-	try {
-		response = await fetch(`${API_URL}/users/${user.id}/pay-concept-persons/${query.pcpid}`, {
+	const promises = [
+		fetch(`${API_URL}/users/${user.id}/pay-concept-persons/${query.pcpid}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${token}`
 			}
-		});
-	} catch (error) {
+		}),
+		fetch(`${API_URL}/users/${user.id}/pay-methods/`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
+		}),
+		fetch(`${API_URL}/campuses/`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' }
+		})
+	];
+
+	try {
+		const [payConceptPersonRes, payMethodsRes, campusesRes] = await Promise.all(promises);
+		if(payConceptPersonRes.status !== 200 || payMethodsRes.status !== 200 || campusesRes.status !== 200) {
+			return {
+				redirect: {
+					destination: '/user',
+					permanent: true,
+				}
+			};
+		}
+		
+		const payConceptPerson = await payConceptPersonRes.json();
+		const payMethods = await payMethodsRes.json();
+		const campuses = await campusesRes.json();
+
 		return {
-			props: {}
-		};
-	}
-
-	let props: { payConceptPerson: PayConceptPerson, payMethods: PayMethod[] } = {} as any;
-
-	if (response.status === 200) {
-		props.payConceptPerson = await response.json();
-	} else {
-		return { props };
-	}
-
-	try {
-		response = await fetch(`${API_URL}/users/${user.id}/pay-methods/`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}`
+			props: {
+				payConceptPerson,
+				payMethods,
+				campuses
 			}
-		});
-	} catch (error) {
-		return { props };
+		};
+	} catch (err) {
+		console.log(err);
 	}
 
-	if (response.status === 200) {
-		props.payMethods = await response.json();
-	} else {
-		return { props };
-	}
-
-	return { props };
+	return {
+		redirect: {
+			destination: '/',
+			permanent: true,
+		}
+	};
 }
 
 export default Payment;

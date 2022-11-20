@@ -4,6 +4,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@600,700&display=swap');
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   font-family: 'Montserrat', sans-serif;;
@@ -40,4 +46,24 @@ nav button:hover {
 
 .slick-arrow::before {
   color: #5a5a5a !important;
+}
+
+input {
+  background-color: #eeeeee;
+}
+
+input:focus {
+  outline: none;
+}
+
+select {
+  padding: 6px 0;
+  padding-right: 16px;
+  margin: 0;
+  width: 100%;
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 0.25em;
+  cursor: pointer;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  outline: none;
 }

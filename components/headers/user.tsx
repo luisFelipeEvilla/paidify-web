@@ -14,11 +14,11 @@ const Header = () => {
     }
 
     return (
-        <nav className='flex justify-between mx-32 mt-4 pb-2 text-base'>
+        <nav className='flex justify-between mx-32 mt-4 pb-2'>
             <a href='/user' className='self-end'>
                 <Image src='/images/logo.svg' width={160} height={40} />
             </a>
-            <ul className='flex justify-around font-bold text-lg'>
+            <ul className='flex justify-around font-bold text-base'>
                 <li className='mr-8 mt-4'>
                     <Link href='/user'><a>
                         Facturas
