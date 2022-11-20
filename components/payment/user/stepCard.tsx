@@ -13,7 +13,9 @@ const StepCard = ({ payMethods, setPayMethodIndex, payMethodIndex }: Props) => {
 	return (
 		<div className='flex'>
 			<div style={{ width: '300px', maxWidth: '100%' }} className='my-auto'>
-				<h3 className='font-bold text-center mb-6'>Seleccione su método de pago:</h3>
+				<label className='block text-lg font-medium text-gray-700 text-center mb-4'>
+					Seleccione su método de pago
+				</label>
 				<Slider dots afterChange={handleCardSelect} initialSlide={payMethodIndex}>
 					{
 						payMethods.map((payMethod: PayMethod) => (

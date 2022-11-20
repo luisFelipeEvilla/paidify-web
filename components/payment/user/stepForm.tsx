@@ -58,10 +58,9 @@ const StepForm = (props: Props) => {
 						<input
 							disabled={!enableInstallments}
 							type='number'
-							min={1}
+							min={2}
 							max={12}
 							{...register('num_installments', { required: enableInstallments })}
-							// {...register('num_installments')}
 							className='py-1 px-2 w-48'
 							placeholder={enableInstallments ? 'Número de cuotas' : ''}
 						/>

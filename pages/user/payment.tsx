@@ -4,11 +4,8 @@ import Header from '../../components/headers/user';
 
 import { ACCESS_TOKEN, ROLE_ADMIN } from '../../utils/constants';
 import { API_URL } from '../../config';
-import { useEffect, useState } from 'react';
 
-import Cards from 'react-credit-cards';
 import jwt from 'jsonwebtoken';
-import Slider from 'react-slick';
 import Cookies from 'cookies';
 
 import 'react-credit-cards/es/styles-compiled.css';
@@ -21,10 +18,14 @@ import PayMethod from '../../domain/user/PayMethod';
 import PaymentForm from '../../components/payment/user';
 import Campus from '../../domain/general/Campus';
 import { withDots } from '../../utils/general';
+import Link from 'next/link';
 
 type Props = { payConceptPerson: PayConceptPerson, payMethods: PayMethod[], campuses: Campus[] };
 
 const Payment = ({ payConceptPerson, payMethods, campuses }: Props) => {
+
+	// payMethods = [];
+	
 	const { payment_concept, ref_number } = payConceptPerson;
 	const { amount, payment_concept: concept } = payment_concept;
 
@@ -37,7 +38,7 @@ const Payment = ({ payConceptPerson, payMethods, campuses }: Props) => {
 			<main>
 				<div className='flex m-auto w-fit' style={{ height: '80vh' }}>
 					<div className='m-auto grid grid-cols-2  justify-items-center'>
-						
+
 						<div className='py-14 px-10 shadow-md flex justify-center items-center border-gray-300 border flex-col rounded-lg'>
 
 							<div>
@@ -53,7 +54,22 @@ const Payment = ({ payConceptPerson, payMethods, campuses }: Props) => {
 							</div>
 						</div>
 
-						<PaymentForm payMethods={payMethods} campuses={campuses}/>
+						{payMethods.length ?
+							<PaymentForm payMethods={payMethods} campuses={campuses} />
+							:
+							<div className='my-auto'>
+								<label className='block text-lg font-medium text-gray-700 text-center mb-4'>
+									No tiene métodos de pago registrados
+								</label>
+								<div className='flex justify-center'>
+									<Link href='/user/payment-methods'>
+										<a className='text-center text-lg font-medium text-blue-600 hover:text-blue-500'>
+											Registrar método de pago
+										</a>
+									</Link>
+								</div>
+							</div>
+						}
 					</div>
 				</div>
 			</main>
@@ -127,7 +143,7 @@ export async function getServerSideProps({ req, res, query }: any) {
 
 	try {
 		const [payConceptPersonRes, payMethodsRes, campusesRes] = await Promise.all(promises);
-		if(payConceptPersonRes.status !== 200 || payMethodsRes.status !== 200 || campusesRes.status !== 200) {
+		if (payConceptPersonRes.status !== 200 || payMethodsRes.status !== 200 || campusesRes.status !== 200) {
 			return {
 				redirect: {
 					destination: '/user',
@@ -135,7 +151,7 @@ export async function getServerSideProps({ req, res, query }: any) {
 				}
 			};
 		}
-		
+
 		const payConceptPerson = await payConceptPersonRes.json();
 		const payMethods = await payMethodsRes.json();
 		const campuses = await campusesRes.json();

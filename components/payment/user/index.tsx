@@ -14,22 +14,25 @@ import BackButton from '../../buttons/back';
 type Props = { payMethods: PayMethod[], campuses: Campus[] };
 
 const PaymentForm = ({ payMethods, campuses }: Props) => {
-	// console.log(payMethods.map(payMethod => payMethod.card_type));
 	
 	const [payMethodIndex, setPayMethodIndex] = useState(0);
 	const [enableInstallments, setEnableInstallments] = useState(false);
 
 	const [step, setStep] = useState(0);
 
-	const { register, handleSubmit, resetField, unregister, formState: { errors, isValid } } = useForm();
+	const {
+		register, unregister, handleSubmit, resetField, watch, formState: { errors, isValid }
+	} = useForm();
 
 	const onSubmit = (data: any) => {
 		console.log(data);
+		console.log(campuses);
+		console.log(watch('campus'));
+		
+		console.log(campuses.find(({ id }) => id === +watch('campus')));
 	};
 
 	const cardIsCredit = () => {
-		// console.log('cardIsCredit?', payMethods[payMethodIndex].card_type);
-		
 		return payMethods[payMethodIndex].card_type === CARD_TYPE_CREDIT;
 	}
 
@@ -45,7 +48,14 @@ const PaymentForm = ({ payMethods, campuses }: Props) => {
 			enableInstallments={enableInstallments}
 			setEnableInstallments={setEnableInstallments}
 		/>,
-		<StepConfirm/>
+		<StepConfirm
+			campus={campuses.find(({ id }) => id === +watch('campus'))?.campus || ''}
+			cardNumber={payMethods[payMethodIndex].card_number}
+			numInstallments={enableInstallments ? watch('num_installments') : null}
+			cvv={watch('cvv')}
+			expMonth={watch('exp_month')}
+			expYear={watch('exp_year')}
+		/>
 	];
 
 	const Navigation = () => (
