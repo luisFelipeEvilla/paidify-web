@@ -1,14 +1,16 @@
-import Link from "next/link";
-import PrimaryButton from "../buttons/primary";
+import { useContext } from 'react';
 
-import PayConcept from "../../domain/payConcepts";
-// type payConcept = {
-//   payment_concept: string,
-//   amount: number
-// };
+import Link from 'next/link';
+import PrimaryButton from '../buttons/primary';
+
+import PayConcept from '../../domain/general/PayConcept';
+import { withDots } from '../../utils/general';
+
+import { AppState } from '../appState';
 
 const InfoCard = (props: PayConcept) => {
   const { payment_concept, amount } = props;
+  // const { user: { role } } : any = useContext(AppState);
 
   return (
     <div className='shadow-lg border-gray-300 border p-8 mx-auto my-12 flex justify-between rounded w-6/12'>
@@ -19,10 +21,10 @@ const InfoCard = (props: PayConcept) => {
       </div>
 
       <div className='text-center'>
-        <p> <b> ${amount} </b> </p>
-        <Link href="">
+        <p> <b> ${withDots(amount)} </b> </p>
+          <Link href={{ pathname: '/guest/payment', query: { 'pcid': props.id } }}>
           <a className=''>
-            <PrimaryButton text="Pagar" color={"blue"} />
+            <PrimaryButton text='Pagar' color={'blue'} />
           </a>
         </Link>
       </div>

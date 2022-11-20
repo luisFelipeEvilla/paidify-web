@@ -9,28 +9,33 @@ const Header = () => {
     const router = useRouter();
 
     const handleLogout = async () => {
-        await router.replace('/signin'); // first redirect; otherwise _app will get /user with no token and will redirect to /guest
         removeCookie(ACCESS_TOKEN);
+        await router.replace('/signin');
     }
 
     return (
-        <nav className='flex justify-between mx-32 mt-4'>
-                <a href='/'>
-                    <Image src='/images/logo.svg' width={200} height={55} />
-                </a>
-            <ul className='flex justify-around font-bold text-xl'>
+        <nav className='flex justify-between mx-32 mt-4 pb-2 text-base'>
+            <a href='/user' className='self-end'>
+                <Image src='/images/logo.svg' width={160} height={40} />
+            </a>
+            <ul className='flex justify-around font-bold text-lg'>
                 <li className='mr-8 mt-4'>
-                    <Link href='/'><a>
+                    <Link href='/user'><a>
                         Facturas
                     </a></Link>
                 </li>
                 <li className='mr-8 mt-4'>
-                    <Link href='/history'><a>
-                        Historico
+                    <Link href='/user/payment-concepts'><a>
+                        Conceptos de Pago
                     </a></Link>
                 </li>
                 <li className='mr-8 mt-4'>
-                    <Link href='/payment-methods'><a>
+                    <Link href='/user/history'><a>
+                        Histórico
+                    </a></Link>
+                </li>
+                <li className='mr-8 mt-4'>
+                    <Link href='/user/payment-methods'><a>
                         Métodos de pago
                     </a></Link>
                 </li>

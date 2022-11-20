@@ -1,30 +1,23 @@
 import Link from "next/link";
 import PrimaryButton from "../buttons/primary";
+import Payment from "../../domain/payments";
 
-import PayConeptPerson from "../../domain/payConceptPersons";
-// type invoice = {
-//   concept: string,
-//   paymentDate: string,
-//   invoiceNumber: string,
-//   amount: number
-//   state: number | null | undefined;
-//   isConcept: boolean;
-//   effectiveDate: string | null;
-// };
+const InfoCard = (props: Payment) => {
+  const { amount, balance, campus, card_type, date, effective_date, fulfilled, gateway_date, 
+    guest_id, id, num_installments, payment_concept, ref_number, successful, user_id } = props;
 
-const InfoCard = (props: PayConeptPerson) => {
-  const { amount, id, pay_before, payment_concept, ref_number } = props;
-
-  const getPaymentState = () => effectiveDate ? state ? 'Exitoso' : 'Fallido' : 'Pendiente';
-  const getColor = () => effectiveDate ? state ? 'green' : 'red' : 'yellow';
+  const getPaymentState = () => effective_date ? successful ? 'Exitoso' : 'Fallido' : 'Pendiente';
+  const getColor = () => effective_date ? successful ? 'green' : 'red' : 'yellow';
 
   return (
     <div className='shadow-lg border-gray-300 border p-8 mx-auto my-12 flex justify-between rounded w-6/12'>
       <div>
         <div className='flex'>
-          <p> <b>Concepto: </b> {concept} </p>
+          <p>
+            <><b>Concepto: </b> {payment_concept}</>
+          </p>
         </div>
-        <div >
+        <div>
           <p className='pt-3'><b>Fecha de Pago: </b> {new Date(paymentDate).toLocaleDateString()} </p>
           <p className='pt-1'><b>No. de Factura: </b> {invoiceNumber} </p>
         </div>

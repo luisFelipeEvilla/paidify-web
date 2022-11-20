@@ -4,19 +4,22 @@ import { useRouter } from 'next/router';
 import { AppState } from '../components/appState';
 
 import Head from 'next/head'
-import Header from '../components/header';
+import Header from '../components/headers/general';
 import Hero from '../components/hero';
 
-import { ROLE_ADMIN, ROLE_USER } from '../utils/constants';
+import { ACCESS_TOKEN, ROLE_ADMIN, ROLE_USER } from '../utils/constants';
+import Cookies from 'cookies';
 
-const Index = () => { // works as route / and as handler for non allowed routes
-  const { user : { role } } : any = useContext(AppState);
+import jwt from 'jsonwebtoken';
+
+const Index = () => {
+  const { user: { role } }: any = useContext(AppState);
   const router = useRouter();
 
-  useEffect(() => {
-    router.replace(role === ROLE_ADMIN ? '/admin' : role === ROLE_USER ? '/user' : '/guest');
-  }, []);
-  
+  // useEffect(() => {
+  //   router.replace(role === ROLE_ADMIN ? '/admin' : role === ROLE_USER ? '/user' : '/guest');
+  // }, []);
+
   return (
     <div>
       <Head>
@@ -34,5 +37,45 @@ const Index = () => { // works as route / and as handler for non allowed routes
     </div>
   )
 };
+
+export async function getServerSideProps({ req, res }: any) {
+  const cookie = new Cookies(req, res);
+
+  const token = cookie.get(ACCESS_TOKEN);
+
+  if (token) {
+
+    const user = jwt.decode(token) as { id: number, role: number };
+
+    if (user) {
+      if (user) {
+        if (user.role === ROLE_ADMIN) {
+          return {
+            redirect: {
+              destination: '/admin',
+              permanent: true,
+            }
+          }
+        }
+
+        if (user.role === ROLE_USER) {
+          return {
+            redirect: {
+              destination: '/user',
+              permanent: true,
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return {
+    redirect: {
+      destination: '/guest',
+      permanent: true,
+    }
+  };
+}
 
 export default Index;

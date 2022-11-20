@@ -17,6 +17,7 @@ body {
 
 nav {
   font-family: 'Open Sans', sans-serif;
+  box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.1);
 }
 
 nav li {
@@ -35,4 +36,8 @@ nav button {
 
 nav button:hover {
   transform: scale(1.05);
+}
+
+.slick-arrow::before {
+  color: #5a5a5a !important;
 }

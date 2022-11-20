@@ -3,12 +3,16 @@ import Head from 'next/head'
 
 import { API_URL } from '../../config';
 
-import Header from '../../components/guest/header';
+import Header from '../../components/headers/guest';
 import Hero from '../../components/hero';
 import InfoCard from '../../components/infoCards/payConcept';
 import SearchBar from '../../components/searchBar';
 
-import PayConcept from '../../domain/payConcepts';
+import PayConcept from '../../domain/general/PayConcept';
+import Cookies from 'cookies';
+import { ACCESS_TOKEN, ROLE_ADMIN, ROLE_USER } from '../../utils/constants';
+
+import jwt from 'jsonwebtoken';
 
 const Home = ({ data }: { data: PayConcept[] }) => {
 
@@ -57,7 +61,38 @@ const Home = ({ data }: { data: PayConcept[] }) => {
   )
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }: any) {
+  const cookie = new Cookies(req, res);
+
+  const token = cookie.get(ACCESS_TOKEN);
+
+  if (token) {
+
+    const user = jwt.decode(token) as { id: number, role: number };
+
+    if(user) {
+      if(user) {
+        if (user.role === ROLE_ADMIN) {
+            return {
+                redirect: {
+                    destination: '/admin',
+                    permanent: true,
+                }
+            }
+        }
+        
+        if (user.role === ROLE_USER) {
+            return {
+                redirect: {
+                    destination: '/user',
+                    permanent: true,
+                }
+            }
+        }
+			}
+    }
+  }
+  
   let response;
 
   try {
@@ -68,7 +103,7 @@ export async function getServerSideProps() {
   } catch (error) {
     return {
       props: { data: [] }
-    }
+    };
   }
   
   let data;
@@ -78,14 +113,14 @@ export async function getServerSideProps() {
   } else {
     return {
       props: { data: [] }
-    }
+    };
   }
   
   // console.log(data);
 
   return {
     props: { data }
-  }
+  };
 }
 
 export default Home;

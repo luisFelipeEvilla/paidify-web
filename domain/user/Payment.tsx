@@ -1,4 +1,4 @@
-import PayConcept from "./payConcepts";
+import PayConcept from "../general/PayConcept";
 
 class Payment {
     id!: number;
@@ -7,12 +7,11 @@ class Payment {
     ref_number!: string;
     num_installments!: number;
     card_type!: string;
-    amount!: number;
-    balance!: number;
-    effective_date!: string;
+    amount!: number | undefined;
+    balance!: number | undefined;
+    effective_date!: string | undefined;
     fulfilled: number | undefined ;
     successful: number | undefined ;
-    guest_id: number | undefined ;
     campus!: string;
     payment_concept!: PayConcept;
 }

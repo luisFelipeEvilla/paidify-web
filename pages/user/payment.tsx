@@ -1,57 +1,179 @@
-import Head from "next/head";
-import Header from "../../components/user/header";
-import Image from "next/image";
+import Head from 'next/head';
+import Image from 'next/image';
+import Header from '../../components/headers/user';
 
-const Payment = () => {
+import { ACCESS_TOKEN, ROLE_ADMIN } from '../../utils/constants';
+import { API_URL } from '../../config';
+import { useEffect, useState } from 'react';
 
-    return (
-        <>
-            <Head>
-                <title>Resumen de Compra</title>
-            </Head>
-            <Header />
-            <main>
-                <div className="flex m-auto w-fit" style={{ height: '80vh' }}>
-                    <div className="m-auto grid grid-cols-2  justify-items-center">
-                        <div className="my-auto">
-                            <h3 className="font-bold">Selecciona la forma de pago:</h3>
+import Cards from 'react-credit-cards';
+import jwt from 'jsonwebtoken';
+import Slider from 'react-slick';
+import Cookies from 'cookies';
 
+import 'react-credit-cards/es/styles-compiled.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-                            <div className="shadow-md border-gray-300 border p-4 mx-auto my-4 flex rounded-lg">
-                            <div className="mr-4">
-                                    <Image src="/icons/icons8-tarjetas-bancarias-64.png" width={64} height={64} />
-                                </div>
-                                <p className="m-auto">Tarjeta de credito/debito</p>
-                            </div>
+import PayConceptPerson from '../../domain/user/PayConceptPerson';
+import PayMethod from '../../domain/user/PayMethod';
 
-                            <div className="shadow-md border-gray-300 border p-4 mx-auto my-4 flex rounded-lg">
-                                <div className="mr-4">
-                                    <Image src="/icons/pse.png" width={64} height={64} />
-                                </div>
-                                <p className="m-auto">Pago por PSE</p>
-                            </div>
+const Payment = ({ payConceptPerson, payMethods }: { payConceptPerson: PayConceptPerson, payMethods: PayMethod[] }) => {
+	const { payment_concept, ref_number } = payConceptPerson;
+	const { amount, payment_concept: concept } = payment_concept;
+	const [payMethod, setPayMethod] = useState(payMethods[0]);
 
-                        </div>
+	const settings = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1
+	};
 
-                        <div className="py-14 shadow-md flex justify-center items-center border-gray-300 border p-4 w-96 flex-col rounded-lg">
+	useEffect(() => {
+		console.log(payMethod);
+	}, [payMethod]);
 
-                            <div>
-                                <Image src="/icons/order_icon.png" width={150} height={150} />
-                            </div>
+	return (
+		<>
+			<Head>
+				<title>Resumen de Compra</title>
+			</Head>
+			<Header />
+			<main>
+				<div className='flex m-auto w-fit' style={{ height: '80vh' }}>
+					<div className='m-auto grid grid-cols-2  justify-items-center'>
+						
+						<div className='flex'>
+							<div style={{ width: '300px', maxWidth: '100%' }} className='my-auto'>
+								<h3 className='font-bold text-center mb-6'>Seleccione su método de pago:</h3>
+								
+								<Slider {...settings}>
+									{
+										payMethods.map((payMethod) => (
+											<div className='div' key={payMethod.id}>
+												<Cards
+													number={payMethod.card_number + ''}
+													name={payMethod.owner}
+													expiry={'**/**'}
+													cvc={'***'}
+												/>
+											</div>
+										))
+									}
+								</Slider>
 
-                            <h3 className="font-bold mb-6">Resumen de compra</h3>
+							</div>
+						</div>
 
-                            <div>
-                                <p><b>Referencia:</b> 30239039</p>
-                                <p><b>Descripcion:</b> Pago de matricula</p>
-                                <p><b>Total a pagar:</b>  COP 546.000</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </>
-    )
+						<div className='py-14 px-10 shadow-md flex justify-center items-center border-gray-300 border flex-col rounded-lg'>
+
+							<div>
+								<Image src='/icons/order_icon.png' width={150} height={150} />
+							</div>
+
+							<h3 className='font-bold mb-6'>Resumen de compra</h3>
+
+							<div className='text-gray-800'>
+								<p><b>Referencia:</b> {ref_number}</p>
+								<p><b>Descripción:</b> {concept}</p>
+								<p><b>Total a pagar:</b> COP {amount}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</>
+	)
+}
+
+export async function getServerSideProps({ req, res, query }: any) {
+	if (!query.pcpid) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: true,
+			}
+		};
+	}
+
+	const cookies = new Cookies(req, res);
+
+	const token = cookies.get(ACCESS_TOKEN) as string;
+
+	if (!token) {
+		return {
+			redirect: {
+				destination: '/guest',
+				permanent: true,
+			}
+		}
+	}
+
+	const user = jwt.decode(token) as { id: number, role: number };
+
+	if (!user) {
+		return {
+			redirect: {
+				destination: '/guest',
+				permanent: true,
+			}
+		}
+	}
+
+	if (user.role === ROLE_ADMIN) {
+		return {
+			redirect: {
+				destination: '/admin',
+				permanent: true,
+			}
+		}
+	}
+
+	let response;
+
+	try {
+		response = await fetch(`${API_URL}/users/${user.id}/pay-concept-persons/${query.pcpid}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
+		});
+	} catch (error) {
+		return {
+			props: {}
+		};
+	}
+
+	let props: { payConceptPerson: PayConceptPerson, payMethods: PayMethod[] } = {} as any;
+
+	if (response.status === 200) {
+		props.payConceptPerson = await response.json();
+	} else {
+		return { props };
+	}
+
+	try {
+		response = await fetch(`${API_URL}/users/${user.id}/pay-methods/`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`
+			}
+		});
+	} catch (error) {
+		return { props };
+	}
+
+	if (response.status === 200) {
+		props.payMethods = await response.json();
+	} else {
+		return { props };
+	}
+
+	return { props };
 }
 
 export default Payment;
