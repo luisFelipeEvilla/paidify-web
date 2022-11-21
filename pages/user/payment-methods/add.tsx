@@ -8,10 +8,10 @@ import 'react-credit-cards/es/styles-compiled.css';
 import jwt from "jsonwebtoken";
 import axios from "axios";
 
-import Header from "../../components/header";
-import Input from "../../components/forms/input";
-import PrimaryButton from "../../components/buttons/primary";
-import { ACCESS_TOKEN } from "../../utils/constants";
+import Header from "../../../components/headers/user";
+import Input from "../../../components/forms/input";
+import PrimaryButton from "../../../components/buttons/primary";
+import { ACCESS_TOKEN } from "../../../utils/constants";
 
 const AddPaymentMethod = () => {
     const [cardNumber, setCardNumber] = useState("");

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 5000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,6 +21,7 @@
     "react-credit-cards": "^0.8.3",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.4",
+    "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.4.3",
     "react-slick": "^0.29.0",
     "sass": "^1.56.0",
