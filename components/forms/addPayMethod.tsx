@@ -1,14 +1,10 @@
-import Head from 'next/head';
 import { useState } from 'react';
 
 import Cards, { Focused } from 'react-credit-cards';
-import creditCardType from 'credit-card-type';
 import { useCookies } from 'react-cookie';
 import 'react-credit-cards/es/styles-compiled.css';
 import jwt from 'jsonwebtoken';
-import axios from 'axios';
 
-import Header from '../headers/user';
 import Input from './input';
 import PrimaryButton from '../buttons/primary';
 import { ACCESS_TOKEN, CARD_TYPE_CREDIT, CARD_TYPE_DEBIT } from '../../utils/constants';

@@ -1,11 +1,9 @@
 
 import { NextPage } from 'next';
 import Image from 'next/image'
-import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 
-// import axios, { AxiosRequestConfig } from 'axios';
 import { API_URL } from '../config';
 
 import PrimaryButton from '../components/buttons/primary';

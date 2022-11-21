@@ -33,7 +33,7 @@ type Props = {
 const PaymentForm = ({ payMethods, campuses, payConceptId, payConceptPersonId, setRefNumber, setWaitingPayment }: Props) => {
 
 	const [cookies] = useCookies([ACCESS_TOKEN]);
-	
+
 	const [payMethodIndex, setPayMethodIndex] = useState(0);
 	const [enableInstallments, setEnableInstallments] = useState(false);
 	const [step, setStep] = useState(0);
@@ -64,17 +64,17 @@ const PaymentForm = ({ payMethods, campuses, payConceptId, payConceptPersonId, s
 			},
 			body: JSON.stringify(body)
 		})
-		.then(res => res.json())
-		.then(data => {
-			console.log(data);
-			setRefNumber(data.ref_number);
-			setWaitingPayment(false);
-		})
-		.catch(err => {
-			console.log(err);
-			setWaitingPayment(false);
-		});
-		
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				setRefNumber(data.ref_number);
+				setWaitingPayment(false);
+			})
+			.catch(err => {
+				console.log(err);
+				setWaitingPayment(false);
+			});
+
 		setWaitingPayment(true);
 	};
 
