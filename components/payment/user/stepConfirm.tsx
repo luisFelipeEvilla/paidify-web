@@ -20,7 +20,7 @@ const StepConfirm = ({ campus, numInstallments, cardNumber, cvv, expMonth, expYe
                 <input className="py-1 px-2" type="text" readOnly value={prettifyCardNumber(cardNumber)} />
             </div>
             <div className="flex gap-4">
-                <label className="my-auto">Campus</label>
+                <label className="my-auto">Sede</label>
                 <input className="py-1 px-2" type="text" readOnly value={campus} />
             </div>
             {numInstallments === null ?

@@ -73,7 +73,7 @@ const Signin: NextPage = () => {
 
                 <form onSubmit={handleSubmit}>
                     <Input onChange={handleOnChange} label={'Usuario'} name={'username'} type={'text'} required={true} />
-                    <p id='errorMessage' className={`${error ? 'visible' : 'hidden'} text-red-500 text-base`}>Error, credenciales incorrectas</p>
+                    <p id='errorMessage' className={`${error ? 'visible' : 'hidden'} text-red-500 text-base`}>Credenciales incorrectas</p>
                     <Input onChange={handleOnChange} label={'Contraseña'} name={'password'} type={'password'} id={'password'} required={true} />
                     <p className='text-base mt-4'>¿No tienes una cuenta? <a className='text-blue-500 hover:scale-150 cursor-pointer' onClick={handleAsGuest}>Ingresar como invitado</a></p>
 

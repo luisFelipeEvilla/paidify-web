@@ -24,11 +24,11 @@ const Header = () => {
                         Facturas
                     </a></Link>
                 </li>
-                <li className='mr-8 mt-4'>
+                {/* <li className='mr-8 mt-4'>
                     <Link href='/user/payment-concepts'><a>
                         Conceptos de Pago
                     </a></Link>
-                </li>
+                </li> */}
                 <li className='mr-8 mt-4'>
                     <Link href='/user/history'><a>
                         Histórico

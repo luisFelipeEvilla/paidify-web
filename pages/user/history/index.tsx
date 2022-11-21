@@ -1,49 +1,33 @@
 import Cookies from "cookies";
 import Head from "next/head";
 import { useState } from "react";
-import Header from "../../components/header";
-import Hero from "../../components/hero";
-import SearchBar from "../../components/searchBar";
+import Hero from "../../../components/hero";
 import jwt from "jsonwebtoken";
-import { API_URL } from "../../config";
-import Payment from "../../domain/payments";
-import { ACCESS_TOKEN, ROLE_ADMIN } from "../../utils/constants";
-import InfoCard from "../../components/infoCards/payment";
+import { API_URL } from "../../../config";
+import Header from "../../../components/headers/user";
+import Payment from "../../../domain/user/Payment";
+import { ACCESS_TOKEN, ROLE_ADMIN } from "../../../utils/constants";
+import InfoCard from "../../../components/infoCards/payment";
 
-const History = ({ data }: { data: Payment[] }) => {
+type Props = { data: Payment[] };
+
+const History = ({ data }: Props) => {
 	const [payments, setPayments] = useState(data);
-
-	// function handleChange(search: any) {
-	// 	setPayments(
-	// 		data.filter((payment: Payment) => {
-	// 			return payment.payment_concept.payment_concept.toLowerCase().includes(search.toLowerCase());
-	// 		})
-	// 	);
-	// };
-
+  
 	return (
 		<div>
 			<Head>
-				<title>Paidify</title>
+				<title>Historial | Paidify</title>
 				<meta name="description" content="Created by Luis Felipe Evilla Rodriguez" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
 			<main>
 				<Header />
-				<Hero />
-				<div className="flex">
-					<div className="m-auto">
-						{/* <SearchBar
-							handleChange={handleChange}
-						></SearchBar> */}
-					</div>
-				</div>
+				{/* <Hero /> */}
 				{
 					payments.map((payment: Payment) => (
-						<InfoCard
-							
-						/>
+						<InfoCard {...payment} />
 					))
 				}
 			</main>
@@ -91,7 +75,7 @@ export async function getServerSideProps({ req, res }: any) {
   let response;
 
   try {
-    response = await fetch(`${API_URL}/users/${user.id}/payments`, {
+    response = await fetch(`${API_URL}/users/${user.id}/payments?$sort=-date`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

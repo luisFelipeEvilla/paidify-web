@@ -28,7 +28,7 @@ const StepForm = (props: Props) => {
 		<div className='flex flex-col gap-6'>
 			<div className='flex'>
 				<div className='my-auto'>
-					<label className='block text-lg font-medium text-gray-700'>Campus</label>
+					<label className='block text-lg font-medium text-gray-700'>Sede</label>
 					<select {...register('campus', { required: true })}>
 						{
 							campuses.map((campus) => (

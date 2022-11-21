@@ -43,9 +43,6 @@ const PaymentForm = ({ payMethods, campuses, payConceptId, payConceptPersonId, s
 	} = useForm();
 
 	const onSubmit = ({ campus, cvv, exp_month, exp_year, num_installments }: any) => {
-		console.log(campus);
-		console.log(watch('campus'));
-
 		const body: any = {
 			cvv, exp_month, exp_year,
 			campus_id: +campus,
@@ -55,7 +52,9 @@ const PaymentForm = ({ payMethods, campuses, payConceptId, payConceptPersonId, s
 			payment_concept_person_id: payConceptPersonId,
 			payment_method_id: payMethods[payMethodIndex].id
 		};
-		console.log(body);
+		// console.log(body);
+		// console.log(API_URL + '/pay');
+		// console.log(cookies[ACCESS_TOKEN]);
 
 		fetch(API_URL + '/pay', {
 			method: 'POST',

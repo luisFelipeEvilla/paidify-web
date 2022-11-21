@@ -2,3 +2,8 @@
 export function withDots(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
+
+export function displayFullDate(date: Date) {
+    const temp = new Date(date);
+    return temp.toLocaleDateString() + ', ' + temp.toLocaleTimeString();
+}

@@ -22,6 +22,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.4",
     "react-loader-spinner": "^5.3.4",
+    "react-paginate": "^8.1.4",
     "react-router-dom": "^6.4.3",
     "react-slick": "^0.29.0",
     "sass": "^1.56.0",
