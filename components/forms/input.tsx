@@ -29,7 +29,7 @@ const Input = (props: InputProps) => {
                 <label htmlFor={props.name} className="block text-xl ml-1.5 my-2.5 font-semibold">{props.label}</label>
                 <div className={"flex flex-row align-items " + inputDesign}>
                     <input className="w-full y-full focus:outline-none" {...props} />
-                    <div style={{ position: "relative", width: "20px", heigth: "20px"}} >
+                    <div style={{ position: "relative", width: "20px", height: "20px"}} >
                         <Image onClick={showPassword} className="hover:cursor-pointer p-1" src="/icons/icons8-eye-30.png" alt="Vercel Logo" layout="fill" objectFit="contain" />
                     </div>
                 </div>

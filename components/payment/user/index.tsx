@@ -64,16 +64,16 @@ const PaymentForm = ({ payMethods, campuses, payConceptId, payConceptPersonId, s
 			},
 			body: JSON.stringify(body)
 		})
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-				setRefNumber(data.ref_number);
-				setWaitingPayment(false);
-			})
-			.catch(err => {
-				console.log(err);
-				setWaitingPayment(false);
-			});
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+			setRefNumber(data.ref_number);
+			setWaitingPayment(false);
+		})
+		.catch(err => {
+			console.log(err);
+			setWaitingPayment(false);
+		});
 		
 		setWaitingPayment(true);
 	};
