@@ -4,7 +4,7 @@ const Hero = () => (
     <div
     style={{display: "flex", justifyContent: "center"}}
     className=" mt-8 ">
-    <Image src="/images/hero.png" width={620} height={310} />
+    <Image src="/images/hero2.png" width={620} height={310} />
   </div>
 
 )

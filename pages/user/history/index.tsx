@@ -25,9 +25,10 @@ const History = ({ data }: Props) => {
 			<main>
 				<Header />
 				{/* <Hero /> */}
+        <h1 className="text-3xl text-center mt-10">Historial de Pagos</h1>
 				{
-					payments.map((payment: Payment) => (
-						<InfoCard {...payment} />
+					payments.map((payment: Payment, i: number) => (
+						<InfoCard {...payment} key={i}/>
 					))
 				}
 			</main>

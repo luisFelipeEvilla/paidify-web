@@ -24,6 +24,7 @@ import { withDots } from '../../utils/general';
 import Link from 'next/link';
 
 import { TailSpin } from 'react-loader-spinner'
+import NextButton from '../../components/buttons/next';
 // import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 type Props = {
@@ -118,6 +119,14 @@ const Payment = ({ payConceptPerson, payConcept, payMethods, campuses }: Props) 
 											<p><b>Descripción:</b> {concept}</p>
 											<p className='mt-2'>Tu solicitud de pago está siendo procesada. No olvides revisar tu correo para seguir el estado de la transacción.</p>
 										</div>
+									</div>
+									<div className='flex justify-end mt-4'>
+										<Link href='/user/history'>
+											<NextButton>
+												Ir al historial de pagos
+												&rarr;
+											</NextButton>
+										</Link>
 									</div>
 								</div>
 							}

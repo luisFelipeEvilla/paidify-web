@@ -102,7 +102,7 @@ export async function getServerSideProps({ req, res }: any) {
 
   try {
     // response = await fetch(`${API_URL}/users/${user.id}/pay-concept-persons&completed=0`, {
-    response = await fetch(`${API_URL}/users/${user.id}/pay-concept-persons`, {
+    response = await fetch(`${API_URL}/users/${user.id}/pay-concept-persons?completed=0`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -126,7 +126,8 @@ export async function getServerSideProps({ req, res }: any) {
   }
   
   return {
-    props: { data: data.filter(payConcept => !payConcept.completed) }
+    // props: { data: data.filter(payConcept => !payConcept.completed) }
+    props: { data }
   };
 }
 
